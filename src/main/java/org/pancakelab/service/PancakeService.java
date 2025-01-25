@@ -29,9 +29,7 @@ public class PancakeService {
         if (order == null) {
             throw new IllegalArgumentException("Order not found or already placed: " + orderId);
         }
-        synchronized (order) {
-            order.addPancake(pancake);
-        }
+        order.addPancake(pancake);
         OrderLog.logAddPancake(order, pancake);
     }
 
@@ -41,12 +39,8 @@ public class PancakeService {
         if (order == null) {
             throw new IllegalArgumentException("Order not found or already placed: " + orderId);
         }
-        synchronized (order) {
-            if (order.getPancakes().isEmpty()) {
-                throw new IllegalStateException("Cannot place an order without pancakes: " + orderId);
-            }
-            order.placeOrder();
-        }
+        order.placeOrder();
+
         newOrders.add(order);
         orders.put(orderId, order); // Track all orders
         OrderLog.logPlaceOrder(order);
@@ -59,12 +53,7 @@ public class PancakeService {
             System.out.println("No orders to prepare.");
             return;
         }
-        synchronized (order) {
-            if (order.getStatus() != OrderStatus.CREATED) {
-                throw new IllegalStateException("Order is not in a valid state for preparation: " + order.getId());
-            }
-            order.prepareOrder();
-        }
+        order.prepareOrder();
         preparedOrders.add(order);
         OrderLog.logPrepareOrder(order);
     }
@@ -77,12 +66,7 @@ public class PancakeService {
             return;
         }
 
-        synchronized (order) {
-            if (order.getStatus() != OrderStatus.PREPARED) {
-                throw new IllegalStateException("Order is not in a valid state for delivery: " + order.getId());
-            }
-            order.deliverOrder();
-        }
+        order.deliverOrder();
         deliveredOrders.add(order);
         OrderLog.logDeliverOrder(order);
     }
@@ -91,9 +75,7 @@ public class PancakeService {
     public void cancelOrder(UUID orderId) {
         Order order = pendingOrders.remove(orderId);
         if (order != null) {
-            synchronized (order) {
-                order.cancelOrder();
-            }
+            order.cancelOrder();
             OrderLog.logCancelOrder(order);
             return;
         }
@@ -102,9 +84,8 @@ public class PancakeService {
         if (removedFromNew) {
             order = orders.get(orderId);
             if (order != null) {
-                synchronized (order) {
-                    order.cancelOrder();
-                }
+                order.cancelOrder();
+
                 OrderLog.logCancelOrder(order);
             }
             return;

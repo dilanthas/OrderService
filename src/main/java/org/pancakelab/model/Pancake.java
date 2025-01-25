@@ -4,21 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Pancake {
-    private final List<Ingredient> baseIngredients;
-    private final List<Ingredient> customIngredients;
-
-    public Pancake(List<Ingredient> baseIngredients,List<Ingredient> customIngredients) {
+public record Pancake(List<Ingredient> baseIngredients, List<Ingredient> customIngredients) {
+    public Pancake(List<Ingredient> baseIngredients, List<Ingredient> customIngredients) {
         this.baseIngredients = Collections.unmodifiableList(baseIngredients);
         this.customIngredients = Collections.unmodifiableList(customIngredients);
-    }
-
-    public List<Ingredient> getBaseIngredients() {
-        return baseIngredients;
-    }
-
-    public List<Ingredient> getCustomIngredients() {
-        return customIngredients;
     }
 
     public double getPrice() {
@@ -47,7 +36,7 @@ public class Pancake {
 
         // Add a custom ingredient
         public Builder addCustomIngredient(Ingredient ingredient) {
-            if(IngredientMenu.isValidIngredient(ingredient)){
+            if (IngredientMenu.isValidIngredient(ingredient)) {
                 customIngredients.add(ingredient);
                 return this;
             }

@@ -39,34 +39,38 @@ public class Order {
         return status;
     }
 
-    public void addPancake(Pancake pancake) {
-        if(status != OrderStatus.INIT){
+    public synchronized void addPancake(Pancake pancake) {
+        if (status != OrderStatus.INIT) {
             throw new IllegalStateException("Order already created.");
         }
         pancakes.add(pancake);
     }
 
-    public void placeOrder(){
+    public synchronized void placeOrder() {
         if (status != OrderStatus.INIT) {
             throw new IllegalStateException("Order already processed.");
+        }
+        if (pancakes.isEmpty()) {
+            throw new IllegalStateException("Cannot place an order without pancakes: " + id);
         }
         status = OrderStatus.CREATED;
     }
 
-    public void prepareOrder() {
+    public synchronized void prepareOrder() {
         if (status != OrderStatus.CREATED) {
             throw new IllegalStateException("Order can only be prepared from CREATED status.");
         }
         status = OrderStatus.PREPARED;
     }
 
-    public void deliverOrder() {
+    public synchronized void deliverOrder() {
         if (status != OrderStatus.PREPARED) {
             throw new IllegalStateException("Order can only be delivered from PREPARED status.");
         }
         status = OrderStatus.DELIVERED;
     }
-    public void cancelOrder() {
+
+    public synchronized void cancelOrder() {
         if (status == OrderStatus.DELIVERED || status == OrderStatus.PREPARED) {
             throw new IllegalStateException("Cannot cancel an order that is already delivered or prepared.");
         }

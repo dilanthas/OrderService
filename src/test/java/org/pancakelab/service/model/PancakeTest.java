@@ -15,12 +15,12 @@ public class PancakeTest {
         Pancake pancake = Pancake.Builder.standard().build();
 
         // Assert
-        List<Ingredient> baseIngredients = pancake.getBaseIngredients();
+        List<Ingredient> baseIngredients = pancake.baseIngredients();
         assertTrue(baseIngredients.contains(Ingredient.FLOUR));
         assertTrue(baseIngredients.contains(Ingredient.EGG));
         assertTrue(baseIngredients.contains(Ingredient.MILK));
         assertEquals(3, baseIngredients.size());
-        assertTrue(pancake.getCustomIngredients().isEmpty());
+        assertTrue(pancake.customIngredients().isEmpty());
         assertEquals(2.25, pancake.getPrice());
     }
 
@@ -30,11 +30,11 @@ public class PancakeTest {
         Pancake pancake = Pancake.Builder.vegan().build();
 
         // Assert
-        List<Ingredient> baseIngredients = pancake.getBaseIngredients();
+        List<Ingredient> baseIngredients = pancake.baseIngredients();
         assertTrue(baseIngredients.contains(Ingredient.FLOUR));
         assertTrue(baseIngredients.contains(Ingredient.SOY_MILK));
         assertEquals(2, baseIngredients.size());
-        assertTrue(pancake.getCustomIngredients().isEmpty());
+        assertTrue(pancake.customIngredients().isEmpty());
         assertEquals(1.5, pancake.getPrice());
     }
 
@@ -47,7 +47,7 @@ public class PancakeTest {
                 .build();
 
         // Assert
-        List<Ingredient> customIngredients = pancake.getCustomIngredients();
+        List<Ingredient> customIngredients = pancake.customIngredients();
         assertTrue(customIngredients.contains(Ingredient.HAZELNUT));
         assertTrue(customIngredients.contains(Ingredient.DARK_CHOCOLATE));
         assertEquals(2, customIngredients.size());
@@ -62,7 +62,7 @@ public class PancakeTest {
                 .build();
 
         // Assert
-        List<Ingredient> customIngredients = pancake.getCustomIngredients();
+        List<Ingredient> customIngredients = pancake.customIngredients();
         assertTrue(customIngredients.contains(Ingredient.HAZELNUT));
         assertEquals(1, customIngredients.size());
         assertEquals(3.5, pancake.getPrice()); // 1.5 (base) + 2.0 (hazelnut)
@@ -79,8 +79,8 @@ public class PancakeTest {
                 .build();
 
         // Assert
-        assertEquals(2, pancake.getBaseIngredients().size());
-        assertEquals(2, pancake.getCustomIngredients().size());
+        assertEquals(2, pancake.baseIngredients().size());
+        assertEquals(2, pancake.customIngredients().size());
         assertEquals(3.25, pancake.getPrice());
     }
 

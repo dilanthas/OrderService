@@ -46,6 +46,12 @@ class OrderTest {
     @Test
     void placeOrder_shouldChangeStatusToCreated() {
         // Act
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+
+        order.addPancake(pancake);
         order.placeOrder();
 
         // Assert
@@ -55,6 +61,12 @@ class OrderTest {
     @Test
     void placeOrder_shouldThrowExceptionIfAlreadyProcessed() {
         // Arrange
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+
+        order.addPancake(pancake);
         order.placeOrder();
 
         // Act & Assert
@@ -65,6 +77,12 @@ class OrderTest {
     @Test
     void prepareOrder_shouldChangeStatusToPrepared() {
         // Arrange
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+
+        order.addPancake(pancake);
         order.placeOrder();
 
         // Act
@@ -84,6 +102,11 @@ class OrderTest {
     @Test
     void deliverOrder_shouldChangeStatusToDelivered() {
         // Arrange
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+        order.addPancake(pancake);
         order.placeOrder();
         order.prepareOrder();
 
@@ -113,6 +136,12 @@ class OrderTest {
     @Test
     void cancelOrder_shouldThrowExceptionIfAlreadyDelivered() {
         // Arrange
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+
+        order.addPancake(pancake);
         order.placeOrder();
         order.prepareOrder();
         order.deliverOrder();
@@ -125,6 +154,12 @@ class OrderTest {
     @Test
     void cancelOrder_shouldThrowExceptionIfAlreadyPrepared() {
         // Arrange
+        Pancake pancake = new Pancake.Builder()
+                .addBaseIngredient(Ingredient.FLOUR)
+                .addBaseIngredient(Ingredient.MILK)
+                .build();
+
+        order.addPancake(pancake);
         order.placeOrder();
         order.prepareOrder();
 
@@ -141,6 +176,7 @@ class OrderTest {
                 .addBaseIngredient(Ingredient.MILK)
                 .build();
 
+        order.addPancake(pancake);
         // Transition the order to CREATED state
         order.placeOrder();
 

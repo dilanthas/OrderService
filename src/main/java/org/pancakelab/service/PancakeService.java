@@ -128,14 +128,6 @@ public class PancakeService {
         if (room <= 0) {
             throw new IllegalArgumentException("Room number must be positive. Provided: " + room);
         }
-
-        // Optional: Add custom range validation if necessary
-        if (building > 100) {
-            throw new IllegalArgumentException("Building number exceeds the maximum limit of 100. Provided: " + building);
-        }
-        if (room > 500) {
-            throw new IllegalArgumentException("Room number exceeds the maximum limit of 500. Provided: " + room);
-        }
     }
 
     // Helper: Remove an order from a queue by ID
